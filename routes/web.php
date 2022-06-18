@@ -44,6 +44,11 @@ Route::group(['middleware' => ['prevent-back-history'],  'namespace' => 'admin']
     Route::group(['middleware' => ['auth']], function () {
         Route::get('logout', 'AuthController@logout')->name('logout');
         Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-        Route::get('portfolio', 'PortfolioController@index')->name('portfolio');
+        Route::any('portfolio', 'PortfolioController@index')->name('portfolio');
+        Route::get('portfolio/create', 'PortfolioController@create')->name('portfolio.create');
+        Route::post('portfolio/insert', 'PortfolioController@insert')->name('portfolio.insert');
+        Route::get('portfolio/edit/{id?}', 'PortfolioController@edit')->name('portfolio.edit');
+        Route::patch('portfolio/update', 'PortfolioController@update')->name('portfolio.update');
+        Route::post('portfolio/change_status', 'PortfolioController@change_status')->name('portfolio.change_status');
     });
 });
