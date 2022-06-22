@@ -15,7 +15,9 @@ class CreatePortfolioTable extends Migration
     {
         Schema::create('portfolio', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
             $table->string('thumbnail_image')->nullable();
+            $table->text('description')->nullable();
             $table->enum('status',['active' ,'inactive' ,'deleted'])->default('active');
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

@@ -8,25 +8,23 @@
 <script src="{{ asset('admin/dist/js/custom.min.js') }}"></script>
 <script src="{{ asset('admin/assets/extra-libs/c3/d3.min.js') }}"></script>
 <script src="{{ asset('admin/assets/extra-libs/c3/c3.min.js') }}"></script>
-<script src="{{ asset('admin/assets/libs/chartist/dist/chartist.min.js') }}"></script>
-<script src="{{ asset('admin/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js') }}"></script>
 <script src="{{ asset('admin/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js') }}"></script>
 <script src="{{ asset('admin/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js') }}"></script>
-<script src="{{ asset('admin/dist/js/pages/dashboards/dashboard1.min.js') }}"></script>
-@yield('scripts')
+<script src="{{ asset('admin/assets/toastr/toastr.min.js') }}"></script>
+<script src="{{ asset('admin/assets/DataTables/datatables.min.js') }}"></script>
 
 
 <script>
     @php
-        $success = '';
-        if(\Session::has('success'))
-            $success = \Session::get('success');
+    $success = '';
+    if(\Session::has('success'))
+    $success = \Session::get('success');
 
         $error = '';
         if(\Session::has('error'))
             $error = \Session::get('error');
     @endphp
-
+    
     var success = "{{ $success }}";
     var error = "{{ $error }}";
 
@@ -38,3 +36,4 @@
         toastr.error(error, 'error');
     }
 </script>
+@yield('scripts')

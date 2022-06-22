@@ -30,8 +30,15 @@ Route::get('seed', function() {
     return "Database seeding generated";
 });
 
-Route::group(['middleware' => ['prevent-back-history'],  'namespace' => 'admin'], function(){
-    Route::group(['middleware' => ['guest']], function () {
+Route::group(['namespace' => 'Front'], function(){
+    Route::get('/', 'RootController@index')->name('home');
+    Route::get('portfolio/{id?}', 'RootController@portfolio')->name('portfolio');
+
+    Route::post('contact', 'RootController@contact')->name('contact');
+});
+
+Route::group(['middleware' => ['prevent-back-history'],   'prefix' => 'admin', 'namespace' => 'admin'], function(){
+    Route::group(['middleware' => ['guest:admin']], function () {
         Route::get('/', 'AuthController@login')->name('login');
         Route::post('signin', 'AuthController@signin')->name('signin');
 
@@ -41,14 +48,19 @@ Route::group(['middleware' => ['prevent-back-history'],  'namespace' => 'admin']
         Route::post('recover-password', 'AuthController@recover_password')->name('recover.password');
     });
 
-    Route::group(['middleware' => ['auth']], function () {
+    Route::group(['middleware' => ['auth:admin']], function () {
         Route::get('logout', 'AuthController@logout')->name('logout');
         Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-        Route::any('portfolio', 'PortfolioController@index')->name('portfolio');
-        Route::get('portfolio/create', 'PortfolioController@create')->name('portfolio.create');
-        Route::post('portfolio/insert', 'PortfolioController@insert')->name('portfolio.insert');
-        Route::get('portfolio/edit/{id?}', 'PortfolioController@edit')->name('portfolio.edit');
-        Route::patch('portfolio/update', 'PortfolioController@update')->name('portfolio.update');
-        Route::post('portfolio/change_status', 'PortfolioController@change_status')->name('portfolio.change_status');
+
+        // Portfolio
+            Route::any('portfolio', 'PortfolioController@index')->name('portfolio');
+            Route::get('portfolio/create', 'PortfolioController@create')->name('portfolio.create');
+            Route::post('portfolio/insert', 'PortfolioController@insert')->name('portfolio.insert');
+            Route::get('portfolio/edit/{id?}', 'PortfolioController@edit')->name('portfolio.edit');
+            Route::get('portfolio/view/{id?}', 'PortfolioController@view')->name('portfolio.view');
+            Route::patch('portfolio/update', 'PortfolioController@update')->name('portfolio.update');
+            Route::post('portfolio/change_status', 'PortfolioController@change_status')->name('portfolio.change_status');
+            Route::post('portfolio/portfolio.profile.remove', 'PortfolioController@portfolio.profile.remove')->name('portfolio.profile.remove');
+        // Portfolio
     });
 });
