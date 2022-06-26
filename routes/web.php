@@ -32,12 +32,11 @@ Route::get('seed', function() {
 
 Route::group(['namespace' => 'Front'], function(){
     Route::get('/', 'RootController@index')->name('home');
-    Route::get('portfolio/{id?}', 'RootController@portfolio')->name('portfolio');
-
+    Route::get('portfolio/{id?}', 'RootController@portfolio')->name('portfolios');
     Route::post('contact', 'RootController@contact')->name('contact');
 });
 
-Route::group(['middleware' => ['prevent-back-history'],   'prefix' => 'admin', 'namespace' => 'admin'], function(){
+Route::group(['middleware' => ['prevent-back-history'], 'prefix' => 'admin', 'namespace' => 'admin'], function(){
     Route::group(['middleware' => ['guest:admin']], function () {
         Route::get('/', 'AuthController@login')->name('login');
         Route::post('signin', 'AuthController@signin')->name('signin');
@@ -62,5 +61,11 @@ Route::group(['middleware' => ['prevent-back-history'],   'prefix' => 'admin', '
             Route::post('portfolio/change_status', 'PortfolioController@change_status')->name('portfolio.change_status');
             Route::post('portfolio/portfolio.profile.remove', 'PortfolioController@portfolio.profile.remove')->name('portfolio.profile.remove');
         // Portfolio
+
+        /** settings */
+            Route::get('settings', 'SettingsController@index')->name('settings');
+            Route::post('settings/update', 'SettingsController@update')->name('settings.update');
+            Route::post('settings/update/logo', 'SettingsController@logo_update')->name('settings.update.logo');
+        /** settings */
     });
 });
